@@ -1,6 +1,7 @@
 from Qt import QtWidgets, QtCore
 from Qt.QtCore import Signal, Slot
 import batchTools_ui
+reload(batchTools_ui)
 
 class skywindBatchWindow(batchTools_ui.batchWindow):
 

@@ -13,9 +13,18 @@ class skywindBatchConfig(batchTools.batchConfig):
         self.scriptFile = scriptFile
         self.root_name = root_name
 
+    def _clear_scene(self, targets):
+
+        for obj in pmc.ls(dag=True):
+            if not obj in targets:
+                if pmc.objExists(obj):
+
+                    pmc.delete(obj)
+
     def batch(self):
 
         for fileDir in self.sourceFiles:
+
             self._open(self.rigFile)
             self._import(fileDir)
 
@@ -24,8 +33,8 @@ class skywindBatchConfig(batchTools.batchConfig):
 
             try:
                 retargeter.bakeBindTargets()
-            except:
-                pass
+            except Exception as e:
+                print 'Could not bake bind targets:\n%s' % e
 
             if self.root_name:
                 root = pmc.PyNode(self.root_name)
@@ -33,8 +42,14 @@ class skywindBatchConfig(batchTools.batchConfig):
                 start = pmc.playbackOptions(minTime=True, q=True)
                 end = pmc.playbackOptions(maxTime=True, q=True)
                 targets = [root] + pmc.listRelatives(root, ad=True)
-                pmc.bakeResults(targets, t=(start, end), hi=True, simulation=True)
+                targets = [target for target in targets if isinstance(target, pmc.nodetypes.Joint)]
+                pmc.bakeResults(targets, t=(start, end), simulation=True)
 
-                self._exportTarget(os.path.basename(fileDir), self.destinationDir, targets)
+                # Remove all rig controls and bind nodes
+                self._clear_scene(targets)
+
+                destination = self.destinationDir + '//'
+
+                self._exportTarget(os.path.basename(fileDir), destination, target)
             else:
                 self._exportAll(os.path.basename(fileDir), self.destinationDir)

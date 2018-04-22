@@ -70,7 +70,6 @@ class directoryWidget(QtWidgets.QWidget):
 
     @property
     def value(self):
-        print self._value
         try:
             return self._value
         except AttributeError:

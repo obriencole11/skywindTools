@@ -12,7 +12,6 @@ class batchConfig(object):
     def batch(self):
 
         for fileDir in self.sourceFiles:
-            print fileDir
             self._newFile()
             self._import(fileDir)
             self._exportAll(os.path.basename(fileDir), self.destinationDir)
@@ -29,15 +28,14 @@ class batchConfig(object):
         PATH = path
         pmc.mel.eval('FBXImportFillTimeline -v true')
         pmc.mel.eval('FBXImportMode -v Exmerge')
-        print PATH
-        pmc.mel.eval('FBXImport -f `python "batchTools.PATH"`')
+        pmc.mel.eval('FBXImport -f "%s"' % path)
 
     def _open(self, path):
         pmc.openFile(path, force=True)
 
     def _exportAll(self, name, directory):
         path = os.path.join(directory, name)
-        pmc.exportAll(path, force=True)
+        pmc.mel.eval('FBXExport -f "%s"' % path)
 
     def _newFile(self):
         pmc.newFile(force=True)
@@ -46,7 +44,7 @@ class batchConfig(object):
         path = os.path.join(directory, name)
         pmc.select(clear=True)
         pmc.select(target)
-        pmc.exportSelected(path, force=True, type='FBX')
+        pmc.mel.eval('FBXExport -f "%s" -s' % path)
 
     def _save(self):
         pmc.saveFile()

@@ -1,5 +1,8 @@
 import batchTools_skywind
 import batchTools_ui_skywind as ui
+reload(ui)
+reload(batchTools_skywind)
+
 from Qt import QtWidgets, QtCore
 from Qt.QtCore import Slot
 import logging
