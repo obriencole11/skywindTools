@@ -21,11 +21,12 @@ def load():
 
     global window
 
-    if window is None:
+    if window:
+        window.close()
 
-        app = QtWidgets.QApplication.instance()
-        parent = {o.objectName(): o for o in app.topLevelWidgets()}["MayaWindow"]
+    app = QtWidgets.QApplication.instance()
+    parent = {o.objectName(): o for o in app.topLevelWidgets()}["MayaWindow"]
 
-        window = ui.batchWindow(parent)
-        window.onBatch.connect(batch)
-        window.show()
+    window = ui.batchWindow(parent)
+    window.onBatch.connect(batch)
+    window  .show()

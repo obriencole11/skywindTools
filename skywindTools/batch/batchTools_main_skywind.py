@@ -29,13 +29,14 @@ def load():
 
     global window
 
-    if window is None:
+    if window:
+        window.close()
 
-        app = QtWidgets.QApplication.instance()
-        parent = {o.objectName(): o for o in app.topLevelWidgets()}["MayaWindow"]
+    app = QtWidgets.QApplication.instance()
+    parent = {o.objectName(): o for o in app.topLevelWidgets()}["MayaWindow"]
 
-        window = ui.skywindBatchWindow(parent)
-        window.onGetSelected.connect(getSelected)
-        window.onBatch.connect(batch)
+    window = ui.skywindBatchWindow(parent)
+    window.onGetSelected.connect(getSelected)
+    window.onBatch.connect(batch)
 
     window.show()
