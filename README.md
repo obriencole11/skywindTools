@@ -6,7 +6,7 @@ For an overview of the features, there is a writeup [here](https://coleobrienart
 ## Retargeter
 
 ### Installation
-Add the batch folder to your local Maya script directory.
+Add the retargeter folder to your local Maya script directory.
 Then in the python console run:
 ```
 from skywindTools.retargeter import retargeter_main

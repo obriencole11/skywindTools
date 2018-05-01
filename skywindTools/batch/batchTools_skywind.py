@@ -50,6 +50,6 @@ class skywindBatchConfig(batchTools.batchConfig):
 
                 destination = self.destinationDir + '//'
 
-                self._exportTarget(os.path.basename(fileDir), destination, target)
+                self._exportTarget(os.path.basename(fileDir), destination, targets)
             else:
                 self._exportAll(os.path.basename(fileDir), self.destinationDir)
