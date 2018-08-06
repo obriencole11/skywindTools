@@ -1,6 +1,6 @@
 import batchTools
 import os
-from retargeter.retargeter.animRetarget import retargeter
+from skywindTools.retargeter import retargeter
 import pymel.core as pmc
 
 class skywindBatchConfig(batchTools.batchConfig):
